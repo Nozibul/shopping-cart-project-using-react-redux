@@ -3,6 +3,9 @@ export const commaReplaceToNum = (str) => {
   const replaceStr = str.replace(/,/g, '')
   return Number(replaceStr)
 }
+
+
+
 export const quantityStockIncrementByProduct = async (products, product) => {
   return products?.length
     ? products.filter((pd) => {
@@ -18,6 +21,9 @@ export const quantityStockIncrementByProduct = async (products, product) => {
       })
     : { error: 'Invalid Request', code: 400 }
 }
+
+
+
 export const quantityDecrementByProduct = async (products, product) => {
   return products?.length
     ? products.filter((pd) => {
@@ -33,6 +39,8 @@ export const quantityDecrementByProduct = async (products, product) => {
       })
     : { error: 'Invalid Request', code: 400 }
 }
+
+
 
 export const existsReplaceWithIncrementProduct = async (carts, newCart) => {
   return carts.map((cart) => {
