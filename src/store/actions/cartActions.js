@@ -5,7 +5,7 @@ import {
   existsReplaceWithIncrementProduct,
   quantityDecrementByProduct,
   quantityStockIncrementByProduct,
-} from '../../utils/func'
+ } from '../../utils/func'
 import { CART_ADD_PRODUCT } from '../reducers/cartReducer'
 import { UPDATE_PRODUCTS } from '../reducers/productReducer'
 import { SELECTED_PRODUCT_CART } from '../reducers/selectedCartReducer'
@@ -26,23 +26,23 @@ export const addProductCartIncrementAction = async (newCartProduct) => {
       product: newCartProduct,
     },
   })
-  const products = store.getState()?.products.products
+
+                 // get current state 
+  const curProducts = store.getState()?.products.products
   const carts = store.getState()?.carts
-  const updateProducts = await quantityStockIncrementByProduct(products, newCartProduct)
+
+  const updateProducts = await quantityStockIncrementByProduct(curProducts, newCartProduct)
   store.dispatch({
     type: UPDATE_PRODUCTS,
     payload: {
       products: updateProducts,
     },
   })
+  
 
-  if (
-    !carts?.products.find(
-      (cart) => cart?.id?.toString()?.trim() === newCartProduct?.id?.toString()?.trim(),
-    )
-  ) {
+  if (!carts?.products.find((cart) => cart?.id?.toString() === newCartProduct?.id?.toString()) ){
     const updateCarts = [...carts.products, newAddedProduct]
-    const totalQty = await cartTotalItemSum(updateCarts)
+    const totalQty = await cartTotalItemSum(updateCarts) // id, name ,stock,  , orderQty
     const totalPrice = await cartTotalPriceSum(updateCarts)
     store.dispatch({
       type: CART_ADD_PRODUCT,
@@ -64,19 +64,22 @@ export const addProductCartIncrementAction = async (newCartProduct) => {
         totalPrice: totalPrice,
       },
     })
-  }
+  } 
 }
 
 
-export const addProductCartDecrementAction = async (newCartProduct) => {
+ export const addProductCartDecrementAction = async (newCartProduct) => {
   store.dispatch({
     type: SELECTED_PRODUCT_CART,
     payload: {
       product: newCartProduct,
     },
   })
-  const carts = store.getState()?.carts
+
+          // get new current state
   const products = store.getState()?.products.products
+  const carts = store.getState()?.carts 
+
   const updateProducts = await quantityDecrementByProduct(products, newCartProduct)
   store.dispatch({
     type: UPDATE_PRODUCTS,
@@ -95,4 +98,4 @@ export const addProductCartDecrementAction = async (newCartProduct) => {
       totalPrice: totalPrice,
     },
   })
-}
+} 

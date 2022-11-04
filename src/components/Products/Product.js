@@ -3,13 +3,15 @@ import { addProductCartIncrementAction } from '../../store/actions/cartActions'
 import { numberFormatUS } from '../../utils/func'
 
 function Product({ product }) {
+
+  // console.log('Products:', product);
   return (
     <>
       <div className="bg-white py-4 px-4 shadow-md rounded-lg my-4 mx-4">
         <div className="flex justify-between px-4 items-center">
           <div className="text-lg font-semibold">
             <p>
-              {product.name}{' '}
+              {product.name}
               <span className={product.qty === 0 && 'py-1 px-3 bg-red-500 rounded text-white'}>
                 ({product.qty === 0 ? 'Stock Out' : product.qty})
               </span>

@@ -9,7 +9,7 @@ export const commaReplaceToNum = (str) => {
 export const quantityStockIncrementByProduct = async (products, product) => {
   return products?.length
     ? products.filter((pd) => {
-        if (pd?.id.toString().trim() === product?.id.toString().trim()) {
+        if (pd?.id.toString() === product?.id.toString()) {
           return {
             ...pd,
             qty: pd.qty ? --pd.qty : 0,
@@ -27,7 +27,7 @@ export const quantityStockIncrementByProduct = async (products, product) => {
 export const quantityDecrementByProduct = async (products, product) => {
   return products?.length
     ? products.filter((pd) => {
-        if (pd?.id.toString().trim() === product?.id.toString().trim()) {
+        if (pd?.id.toString() === product?.id.toString()) {
           return {
             ...pd,
             qty:  pd.qty < pd.stock ? ++pd.qty : pd.stock,
@@ -42,9 +42,9 @@ export const quantityDecrementByProduct = async (products, product) => {
 
 
 
-export const existsReplaceWithIncrementProduct = async (carts, newCart) => {
+export const existsReplaceWithIncrementProduct = async (carts, newAddedProduct) => {
   return carts.map((cart) => {
-    if (cart?.id?.toString()?.trim() === newCart?.id?.toString()?.trim()) {
+    if (cart?.id?.toString() === newAddedProduct?.id?.toString()) {
       return {
         ...cart,
         orderQty: cart.orderQty < cart.stock ? ++cart.orderQty : cart.stock,
@@ -56,9 +56,10 @@ export const existsReplaceWithIncrementProduct = async (carts, newCart) => {
   })
 }
 
+
 export const existsReplaceWithDecrementProduct = async (carts, newCart) => {
   return carts.map((cart) => {
-    if (cart?.id?.toString()?.trim() === newCart?.id?.toString()?.trim()) {
+    if (cart?.id?.toString() === newCart?.id?.toString()) {
       return {
         ...cart,
         orderQty: cart.orderQty ? --cart.orderQty : 0,
@@ -69,9 +70,12 @@ export const existsReplaceWithDecrementProduct = async (carts, newCart) => {
     }
   })
 }
+
+
 export const cartTotalItemSum = async (carts) => {
   return carts.reduce((prev, curr) => prev + curr.orderQty, 0)
 }
+
 export const cartTotalPriceSum = async (carts) => {
   return carts.reduce((prev, curr) => prev + curr.orderQty * curr.price, 0)
 }
